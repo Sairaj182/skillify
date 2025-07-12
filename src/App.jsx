@@ -3,63 +3,23 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import BlurredText from './components/blur';
-import BackendTest from './BackendTest';
+import BackendTest from './components/BackendTest';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './Home';
+import Login from './pages/login'; 
 
-function hello(){
-  return(
-  < >
-  <BackendTest/>
-  <div className ="home">
-  <div className="Home-page-nav"> 
-    <div className="Title"><p className="title1"> <BlurredText text="Welcome to Skill Swap Platform" speed={75} delay={500} /></p></div>
-    <div className='Login'><a href="#"><button className='btn-login'>Login</button></a></div>
-  </div>
-  <div className='info'>
-    <div className='info-1 info-2'>
-      <div className='profile-pic'>
-      </div>
-      <div className='information'>
-      <div className='Name'>Marc De Blanco</div>
-      <div className="skills">
-      <div className='skills-offered'>Skills Offered:</div>
-      <div className='skills-requested'>Skills Requested:</div>
-      </div>
-      </div>
-      <div className="request" >
-        <button className="btn-request">Request</button>
-      </div>
-    </div>
-    <div className='info-1'>
-      <div className='profile-pic'>
-      </div>
-      <div className='information'>
-      <div className='Name'>Marc De Blanco</div>
-      <div className="skills">
-      <div className='skills-offered'>Skills Offered:</div>
-      <div className='skills-requested'>Skills Requested:</div>
-      </div>
-      </div>
-      <div className="request" >
-        <button className="btn-request">Request</button>
-      </div>
-    </div>
-    <div className='info-1'>
-     <div className='profile-pic'>
-      </div>
-      <div className='information'>
-      <div className='Name decrypt-text'>Marc De Blanco</div>
-      <div className="skills">
-      <div className='skills-offered'>Skills Offered:</div>
-      <div className='skills-requested'>Skills Requested:</div>
-      </div>
-      </div>
-      <div className="request">
-        <button className="btn-request">Request</button>
-      </div>
-    </div>
-  </div>
-  </div>
-  </>);
+function App() {
+  return (
+    <Router>
+
+      {/* Routes */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} /> 
+        <Route path="/test" element={<BackendTest/>}/>
+      </Routes>
+    </Router>
+  );
 }
 
-export default hello;
+export default App;
