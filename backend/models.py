@@ -15,19 +15,10 @@ CREATE TABLE IF NOT EXISTS users (
 
 SKILLS_TABLE = """
 CREATE TABLE IF NOT EXISTS skills (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id TEXT,
     category TEXT,
     skill_name TEXT,
-    FOREIGN KEY(user_id) REFERENCES users(id)
-)
-"""
-
-USERS_LOGIN_TABLE = """
-CREATE TABLE IF NOT EXISTS users_login (
-    user_id TEXT PRIMARY KEY,
-    email TEXT UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(user_id) REFERENCES users(id)
 )
 """
@@ -76,10 +67,11 @@ def init_models():
     cursor = conn.cursor()
     cursor.execute(USER_TABLE)
     cursor.execute(SKILLS_TABLE)
-    cursor.execute(USERS_LOGIN_TABLE)
     cursor.execute(SWAP_REQUESTS_TABLE)
     cursor.execute(FEEDBACK_TABLE)
     cursor.execute(ADMIN_TABLE)
+    # Ensure at least one admin row exists
+    cursor.execute("INSERT OR IGNORE INTO admin (id, notifications_sent, banned_users, rejected_descriptions, activity_reports, feedback_logs, swap_stats) VALUES ('ADM1N00', '[]', '[]', '[]', '[]', '[]', '[]')")
     conn.commit()
     conn.close()
 
