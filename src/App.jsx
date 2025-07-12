@@ -4,9 +4,12 @@ import viteLogo from '/vite.svg';
 import './App.css';
 import BackendTest from './components/BackendTest';
 import Home from './Home';
-import Login from './pages/login';
+import Login from './pages/Login';
+import RequestPage from './pages/RequestPage';
+import RequestForm from './pages/RequestForm';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import ProfilePage from './pages/ProfilePage';
+import SwapRequest from './pages/SwapRequest';
 const API_BASE = "http://localhost:5001";
 
 function App() {
@@ -291,7 +294,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/request/:name" element={<RequestPage />} />
+        <Route path="/swap" element={<RequestForm />} />
+        <Route path="/profile/:name" element={<ProfilePage />} />
+        <Route path="/swap-request" element={<SwapRequest />} />
         <Route
           path="/test"
           element={

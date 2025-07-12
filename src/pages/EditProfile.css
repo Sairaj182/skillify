@@ -1,0 +1,188 @@
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #111;
+  color: white;
+}
+
+.edit-profile {
+  padding: 20px;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid white;
+  padding-bottom: 10px;
+}
+
+.user-label {
+  background-color: #024;
+  color: #0f0;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav .save {
+  color: #0f0;
+}
+
+.nav .discard {
+  color: red;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.form-body {
+  display: flex;
+  gap: 40px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.left-side {
+  flex: 2;
+  min-width: 300px;
+}
+
+.right-side {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid white;
+  color: white;
+  font-size: 1rem;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.tag {
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.photo-box {
+  text-align: center;
+}
+
+.photo-circle {
+  width: 150px;
+  height: 150px;
+  border: 2px solid white;
+  border-radius: 50%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.photo-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.photo-actions span {
+  cursor: pointer;
+}
+
+.photo-actions .remove {
+  color: red;
+}
+
+.location-row {
+  position: relative;
+}
+
+.location-tag {
+  position: absolute;
+  top: -10px;
+  left: 130px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 14px solid purple;
+}
+
+.location-label {
+  background-color: purple;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-body {
+    flex-direction: column;
+  }
+
+  .photo-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .user-label {
+    font-size: 0.9rem;
+  }
+}

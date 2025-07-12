@@ -79,7 +79,8 @@ const SearchResults = () => {
               <div className="rating">Rating: {user.rating}/5</div>
             </div>
             <div className="request-button">
-              <button className="btn-request">Request</button>
+              <button className="btn-request" onClick={() => navigate(`/request/${encodeURIComponent(user.name)}`)}>Request</button>
+              <button className="btn-request" onClick={() => navigate(`/profile/${encodeURIComponent(user.name)}`)}>Profile</button>
             </div>
           </div>
         ))}
@@ -94,4 +95,4 @@ const SearchResults = () => {
   );
 };
 
-export default SearchResults;
+export default SearchResults;

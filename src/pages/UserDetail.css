@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #111;
+  color: white;
+}
+
+.user-detail-page {
+  padding: 20px;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid white;
+  padding-bottom: 10px;
+}
+
+.platform-title {
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.detail-body {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  gap: 30px;
+}
+
+.left-panel {
+  flex: 2;
+  min-width: 250px;
+}
+
+.right-panel {
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-photo {
+  width: 160px;
+  height: 160px;
+  border: 2px solid white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.btn-request {
+  background-color: #066;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.username {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.tag {
+  padding: 5px 10px;
+  border: 1px solid white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .detail-body {
+    flex-direction: column;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .btn-request {
+    width: 100%;
+  }
+
+  .profile-photo {
+    margin-top:20px;}
+}
