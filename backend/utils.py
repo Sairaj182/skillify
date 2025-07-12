@@ -307,3 +307,71 @@ def view_feedback_for_user_util(user_id):
         }
         for r in rows
     ]
+
+def send_swap_request(data):
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "INSERT INTO swap_requests (from_user_id, to_user_id, skill_offered, skill_requested, status) VALUES (?, ?, ?, ?, 'pending')",
+            (
+                data.get("from_user_id"),
+                data.get("to_user_id"),
+                data.get("skill_offered"),
+                data.get("skill_requested"),
+            )
+        )
+        conn.commit()
+        result = {"success": True, "message": "Swap request sent"}
+    except Exception as e:
+        result = {"success": False, "error": str(e)}
+    conn.close()
+    return result
+
+def accept_swap(swap_id):
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE swap_requests SET status = 'accepted' WHERE id = ?", (swap_id,))
+    conn.commit()
+    conn.close()
+    return {"success": True, "message": "Swap accepted"}
+
+def reject_swap(swap_id):
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE swap_requests SET status = 'rejected' WHERE id = ?", (swap_id,))
+    conn.commit()
+    conn.close()
+    return {"success": True, "message": "Swap rejected"}
+
+def cancel_swap(swap_id):
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE swap_requests SET status = 'cancelled' WHERE id = ? AND status = 'pending'", (swap_id,))
+    conn.commit()
+    conn.close()
+    return {"success": True, "message": "Swap cancelled"}
+
+def view_user_swaps(user_id):
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT * FROM swap_requests WHERE from_user_id = ? OR to_user_id = ?",
+        (user_id, user_id)
+    )
+    rows = cursor.fetchall()
+    columns = [desc[0] for desc in cursor.description]
+    conn.close()
+    return [dict(zip(columns, row)) for row in rows]
+
+def view_pending_swaps(user_id):
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT * FROM swap_requests WHERE (from_user_id = ? OR to_user_id = ?) AND status = 'pending'",
+        (user_id, user_id)
+    )
+    rows = cursor.fetchall()
+    columns = [desc[0] for desc in cursor.description]
+    conn.close()
+    return [dict(zip(columns, row)) for row in rows]

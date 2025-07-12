@@ -25,6 +25,12 @@ from utils import (
     list_all_skills,
     submit_feedback_util,
     view_feedback_for_user_util,
+    send_swap_request,
+    accept_swap,
+    reject_swap,
+    cancel_swap,
+    view_user_swaps,
+    view_pending_swaps,
 )
 
 app = Flask(__name__)
@@ -156,6 +162,38 @@ def submit_feedback():
 @app.route("/feedback/user/<user_id>", methods=["GET"])
 def view_feedback_for_user(user_id):
     result = view_feedback_for_user_util(user_id)
+    return jsonify(result)
+
+# Swap routes
+@app.route("/swaps/request", methods=["POST"])
+def swap_request():
+    data = request.get_json()
+    result = send_swap_request(data)
+    return jsonify(result)
+
+@app.route("/swaps/accept/<int:swap_id>", methods=["PUT"])
+def swap_accept(swap_id):
+    result = accept_swap(swap_id)
+    return jsonify(result)
+
+@app.route("/swaps/reject/<int:swap_id>", methods=["PUT"])
+def swap_reject(swap_id):
+    result = reject_swap(swap_id)
+    return jsonify(result)
+
+@app.route("/swaps/cancel/<int:swap_id>", methods=["DELETE"])
+def swap_cancel(swap_id):
+    result = cancel_swap(swap_id)
+    return jsonify(result)
+
+@app.route("/swaps/user/<user_id>", methods=["GET"])
+def swaps_for_user(user_id):
+    result = view_user_swaps(user_id)
+    return jsonify(result)
+
+@app.route("/swaps/pending/<user_id>", methods=["GET"])
+def swaps_pending(user_id):
+    result = view_pending_swaps(user_id)
     return jsonify(result)
 
 if __name__ == "__main__":

@@ -31,6 +31,9 @@ const BackendTest = () => {
   const [feedbackComment, setFeedbackComment] = useState('');
   const [userFeedbackList, setUserFeedbackList] = useState([]);
   const [feedbackUserId, setFeedbackUserId] = useState('');
+  const [swapRequestMsg, setSwapRequestMsg] = useState('');
+  const [swapId, setSwapId] = useState('');
+  const [pendingSwaps, setPendingSwaps] = useState([]);
 
   // Fetch all users
   const fetchUsers = async () => {
@@ -244,6 +247,101 @@ const BackendTest = () => {
     }
   };
 
+  // Send Swap Request
+  const sendSwapRequest = async (fromUserId, toUserId, skillOffered, skillRequested) => {
+    try {
+      const res = await fetch(`${API_BASE}/swaps/request`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from_user_id: fromUserId,
+          to_user_id: toUserId,
+          skill_offered: skillOffered,
+          skill_requested: skillRequested
+        })
+      });
+      const data = await res.json();
+      setSwapRequestMsg(data.message || data.error);
+    } catch (err) {
+      setSwapRequestMsg("Error sending swap request");
+    }
+  };
+
+  // Accept Swap
+  const acceptSwap = async () => {
+    if (!swapId) {
+      alert("Enter swap ID to accept");
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/swaps/accept/${swapId}`, { method: "PUT" });
+      const data = await res.json();
+      setSwapRequestMsg(data.message || data.error);
+    } catch (err) {
+      setSwapRequestMsg("Error accepting swap");
+    }
+  };
+
+  // Reject Swap
+  const rejectSwap = async () => {
+    if (!swapId) {
+      alert("Enter swap ID to reject");
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/swaps/reject/${swapId}`, { method: "PUT" });
+      const data = await res.json();
+      setSwapRequestMsg(data.message || data.error);
+    } catch (err) {
+      setSwapRequestMsg("Error rejecting swap");
+    }
+  };
+
+  // Cancel Swap
+  const cancelSwap = async () => {
+    if (!swapId) {
+      alert("Enter swap ID to cancel");
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/swaps/cancel/${swapId}`, { method: "DELETE" });
+      const data = await res.json();
+      setSwapRequestMsg(data.message || data.error);
+    } catch (err) {
+      setSwapRequestMsg("Error cancelling swap");
+    }
+  };
+
+  // View Swaps for User
+  const viewSwapsForUser = async () => {
+    if (!userId) {
+      alert("Enter user ID to view swaps");
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/swaps/user/${userId}`);
+      const data = await res.json();
+      setSwapList(data);
+    } catch (err) {
+      setSwapList([{ error: "Error fetching swaps" }]);
+    }
+  };
+
+  // View Pending Swaps
+  const viewPendingSwaps = async () => {
+    if (!userId) {
+      alert("Enter user ID to view pending swaps");
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/swaps/pending/${userId}`);
+      const data = await res.json();
+      setPendingSwaps(data);
+    } catch (err) {
+      setPendingSwaps([{ error: "Error fetching pending swaps" }]);
+    }
+  };
+
   return (
     <div>
       <h2>Backend Test</h2>
@@ -343,6 +441,41 @@ const BackendTest = () => {
         />
         <button onClick={viewUserFeedback}>View Feedback</button>
         <pre>{JSON.stringify(userFeedbackList, null, 2)}</pre>
+      </div>
+      <hr />
+      <h3>Swap Actions</h3>
+      <div>
+        <h4>Send Swap Request</h4>
+        <input placeholder="From User ID" id="fromUserId" />
+        <input placeholder="To User ID" id="toUserId" />
+        <input placeholder="Skill Offered" id="skillOffered" />
+        <input placeholder="Skill Requested" id="skillRequested" />
+        <button onClick={() => {
+          const fromUserId = document.getElementById('fromUserId').value;
+          const toUserId = document.getElementById('toUserId').value;
+          const skillOffered = document.getElementById('skillOffered').value;
+          const skillRequested = document.getElementById('skillRequested').value;
+          sendSwapRequest(fromUserId, toUserId, skillOffered, skillRequested);
+        }}>Send Swap Request</button>
+      </div>
+      <div>
+        <input
+          placeholder="Swap ID"
+          value={swapId}
+          onChange={e => setSwapId(e.target.value)}
+        />
+        <button onClick={acceptSwap}>Accept Swap</button>
+        <button onClick={rejectSwap}>Reject Swap</button>
+        <button onClick={cancelSwap}>Cancel Swap</button>
+      </div>
+      <div>
+        <button onClick={viewSwapsForUser}>View Swaps for User</button>
+        <button onClick={viewPendingSwaps}>View Pending Swaps</button>
+      </div>
+      <div>
+        <span>{swapRequestMsg}</span>
+        <h4>Pending Swaps:</h4>
+        <pre>{JSON.stringify(pendingSwaps, null, 2)}</pre>
       </div>
       <hr />
       <div>
