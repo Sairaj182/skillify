@@ -293,7 +293,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home users={users} />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/request/:name" element={<RequestPage />} />
         <Route path="/swap" element={<RequestForm />} />
